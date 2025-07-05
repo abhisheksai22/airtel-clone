@@ -48,18 +48,4 @@ public class GlobalExceptionHandler {
         return new ResponseEntity<>(errorResponse, HttpStatus.BAD_REQUEST);
     }
 
-    @ExceptionHandler(BusinessCriteriaException.class)
-    public ResponseEntity<ErrorResponse> handleBusinessCriteriaException(
-            BusinessCriteriaException ex) {
-
-        ErrorResponse errorResponse = ErrorResponse.builder()
-                .timestamp(LocalDateTime.now())
-                .code(HttpStatus.BAD_REQUEST.value())
-                .message("Business criteria validation failed")
-                .errors(ex.getErrors())
-                .build();
-
-        return new ResponseEntity<>(errorResponse, HttpStatus.BAD_REQUEST);
-    }
-
 }
