@@ -2,7 +2,6 @@ package com.abhi.airtel.service.impl;
 
 import com.abhi.airtel.dto.RouterResponseDto;
 import com.abhi.airtel.entity.Router;
-import com.abhi.airtel.exceptions.BusinessCriteriaException;
 import com.abhi.airtel.exceptions.RouterNotFoundException;
 import com.abhi.airtel.mapper.RouterMapper;
 import com.abhi.airtel.repository.RouterRepository;
