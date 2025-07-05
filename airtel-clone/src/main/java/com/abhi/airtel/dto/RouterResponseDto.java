@@ -19,5 +19,5 @@ public class RouterResponseDto {
     private String ipAddress;
     private String firmwareVersion;
     private String status;
-    private List<BandDto> bands;
+    private List<BandResponseDto> bands;
 }

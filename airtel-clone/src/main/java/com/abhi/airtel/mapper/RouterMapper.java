@@ -1,6 +1,6 @@
 package com.abhi.airtel.mapper;
 
-import com.abhi.airtel.dto.BandDto;
+import com.abhi.airtel.dto.BandResponseDto;
 import com.abhi.airtel.dto.RouterResponseDto;
 import com.abhi.airtel.entity.Band;
 import com.abhi.airtel.entity.Router;
@@ -13,7 +13,7 @@ import java.util.List;
 public class RouterMapper {
 
     public static RouterResponseDto RouterToRouterResponseDto(Router router) {
-        List<BandDto> bandDtos = router.getBands().stream()
+        List<BandResponseDto> bandDtos = router.getBands().stream()
                 .map(RouterMapper::bandToBandDto)
                 .toList();
         return RouterResponseDto.builder()
@@ -26,8 +26,8 @@ public class RouterMapper {
                 .build();
     }
 
-    public static BandDto bandToBandDto(Band band) {
-        return BandDto.builder()
+    public static BandResponseDto bandToBandDto(Band band) {
+        return BandResponseDto.builder()
                 .bandId(band.getBandId())
                 .bandName(band.getBandName())
                 .bandType(String.valueOf(band.getBandType()))

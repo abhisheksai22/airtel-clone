@@ -9,7 +9,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @Builder
 @Data
-public class BandDto {
+public class BandResponseDto {
     private Long bandId;
     private String bandName;
     private String bandType;
