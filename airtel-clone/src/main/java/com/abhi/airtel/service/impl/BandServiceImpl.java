@@ -41,5 +41,10 @@ public class BandServiceImpl implements BandService {
     public void deleteBand(Long id) {
         bandRepository.deleteById(id);
     }
+
+    @Override
+    public void updateBandPassword(Band band) {
+        bandRepository.save(band);
+    }
 }
 

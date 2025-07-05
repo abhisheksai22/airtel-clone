@@ -1,8 +1,11 @@
 package com.abhi.airtel.controller;
 
-import com.abhi.airtel.dto.RouterResponseDto;
+import com.abhi.airtel.model.PasswordUpdateRequest;
+import com.abhi.airtel.model.RouterRequestDto;
+import com.abhi.airtel.model.RouterResponseDto;
 import com.abhi.airtel.entity.Router;
 import com.abhi.airtel.service.RouterService;
+import jakarta.validation.Valid;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -20,9 +23,8 @@ public class RouterController {
     private RouterService routerService;
 
     @PostMapping
-    public Router createRouter(@RequestBody Router router) {
-        log.info("Routers ...");
-        return routerService.saveRouter(router);
+    public ResponseEntity<RouterResponseDto> createRouter(@RequestBody @Valid RouterRequestDto routerRequestDto) {
+        return new ResponseEntity<>(routerService.saveRouter(routerRequestDto), HttpStatus.CREATED);
     }
 
     @GetMapping("/{id}")
@@ -44,6 +46,20 @@ public class RouterController {
     public ResponseEntity<Void> deleteRouter(@PathVariable Long id) {
         routerService.deleteRouter(id);
         return ResponseEntity.noContent().build();
+    }
+
+
+    @PatchMapping
+    public ResponseEntity<?> updatePassword(@RequestBody @Valid PasswordUpdateRequest passwordUpdateRequest) {
+        if (passwordUpdateRequest.getOldPassword().equals(passwordUpdateRequest.getNewPassword())) {
+            return ResponseEntity.badRequest().body("New password cannot be the same as the old password");
+        }
+
+        routerService.updatePassword(passwordUpdateRequest);
+
+
+
+        return ResponseEntity.ok("Password updated successfully");
     }
 }
 

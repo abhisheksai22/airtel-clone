@@ -9,5 +9,7 @@ public interface BandService {
     List<Band> getAllBands();
     Band updateBand(Long id, Band band);
     void deleteBand(Long id);
+
+    void updateBandPassword(Band band);
 }
 

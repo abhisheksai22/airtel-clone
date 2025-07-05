@@ -1,6 +1,9 @@
 package com.abhi.airtel.service.impl;
 
-import com.abhi.airtel.dto.RouterResponseDto;
+import com.abhi.airtel.entity.Band;
+import com.abhi.airtel.model.PasswordUpdateRequest;
+import com.abhi.airtel.model.RouterRequestDto;
+import com.abhi.airtel.model.RouterResponseDto;
 import com.abhi.airtel.entity.Router;
 import com.abhi.airtel.exceptions.RouterNotFoundException;
 import com.abhi.airtel.mapper.RouterMapper;
@@ -15,12 +18,19 @@ import java.util.List;
 @Service
 @Slf4j
 public class RouterServiceImpl implements RouterService {
+
     @Autowired
     private RouterRepository routerRepository;
 
+    @Autowired
+    private BandServiceImpl bandService;
+
     @Override
-    public Router saveRouter(Router router) {
-        return routerRepository.save(router);
+    public RouterResponseDto saveRouter(RouterRequestDto routerRequestDto) {
+
+        Router router = RouterMapper.RouterRequestDtoToRouter(routerRequestDto);
+        Router savedRouter = routerRepository.save(router);
+        return RouterMapper.RouterToRouterResponseDto(savedRouter);
     }
 
     @Override
@@ -50,6 +60,20 @@ public class RouterServiceImpl implements RouterService {
     @Override
     public void deleteRouter(Long id) {
         routerRepository.deleteById(id);
+    }
+
+    @Override
+    public void updatePassword(PasswordUpdateRequest passwordUpdateRequest) {
+        Router router = routerRepository.findById(passwordUpdateRequest.getRouterId())
+                .orElseThrow(() -> new RouterNotFoundException("Router not found with Id : " + passwordUpdateRequest.getRouterId()));
+
+        Band band = router.getBands().stream()
+                .filter(b -> b.getBandId().equals(passwordUpdateRequest.getBandId()))
+                .findFirst()
+                .orElseThrow(() -> new RouterNotFoundException("Band not found with Id : " + passwordUpdateRequest.getBandId()));
+
+        band.setBandPassword(passwordUpdateRequest.getNewPassword());
+        bandService.updateBandPassword(band);
     }
 }
 

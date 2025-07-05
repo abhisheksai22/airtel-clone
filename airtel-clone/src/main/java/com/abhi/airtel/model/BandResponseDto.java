@@ -1,4 +1,4 @@
-package com.abhi.airtel.dto;
+package com.abhi.airtel.model;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
