@@ -13,12 +13,12 @@ import java.util.List;
 @RequestMapping("/api/bands")
 @Slf4j
 public class BandController {
+
     @Autowired
     private BandService bandService;
 
     @PostMapping
     public Band createBand(@RequestBody Band band) {
-
         return bandService.saveBand(band);
     }
 

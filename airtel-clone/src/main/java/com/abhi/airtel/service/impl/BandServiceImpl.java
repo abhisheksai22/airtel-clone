@@ -1,6 +1,7 @@
 package com.abhi.airtel.service.impl;
 
 import com.abhi.airtel.entity.Band;
+import com.abhi.airtel.exceptions.RouterNotFoundException;
 import com.abhi.airtel.repository.BandRepository;
 import com.abhi.airtel.service.BandService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,6 +11,7 @@ import java.util.List;
 
 @Service
 public class BandServiceImpl implements BandService {
+
     @Autowired
     private BandRepository bandRepository;
 
@@ -20,7 +22,8 @@ public class BandServiceImpl implements BandService {
 
     @Override
     public Band getBandById(Long id) {
-        return bandRepository.findById(id).orElse(null);
+        return bandRepository.findById(id)
+                .orElseThrow(() -> new RouterNotFoundException("Band not found with Id : " + id));
     }
 
     @Override
@@ -33,8 +36,9 @@ public class BandServiceImpl implements BandService {
         if (bandRepository.existsById(id)) {
             band.setBandId(id);
             return bandRepository.save(band);
+        } else {
+            throw new RouterNotFoundException("Band not found with Id : " + id);
         }
-        return null;
     }
 
     @Override

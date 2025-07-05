@@ -8,11 +8,13 @@ import com.abhi.airtel.entity.Band;
 import com.abhi.airtel.entity.BandType;
 import com.abhi.airtel.entity.Router;
 import lombok.experimental.UtilityClass;
+import lombok.extern.slf4j.Slf4j;
 
 import java.util.ArrayList;
 import java.util.List;
 
 @UtilityClass
+@Slf4j
 public class RouterMapper {
 
     public static Router RouterRequestDtoToRouter(RouterRequestDto routerRequestDto) {
@@ -20,7 +22,8 @@ public class RouterMapper {
                 routerRequestDto.getBandRequestDtos().stream()
                         .map(RouterMapper::bandRequestDtoToBand)
                         .toList() : new ArrayList<>();
-        return Router.builder()
+        log.info("bands :{}", bands);
+        Router router = Router.builder()
                 .firmwareVersion(routerRequestDto.getFirmwareVersion())
                 .status(routerRequestDto.getStatus())
                 .model(routerRequestDto.getModel())
@@ -28,6 +31,9 @@ public class RouterMapper {
                 .macAddress(routerRequestDto.getMacAddress())
                 .bands(bands)
                 .build();
+
+        router.getBands().forEach(band -> band.setRouter(router));
+        return router;
     }
 
     public static RouterResponseDto RouterToRouterResponseDto(Router router) {

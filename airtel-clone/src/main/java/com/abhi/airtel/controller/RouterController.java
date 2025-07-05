@@ -51,13 +51,12 @@ public class RouterController {
 
     @PatchMapping
     public ResponseEntity<?> updatePassword(@RequestBody @Valid PasswordUpdateRequest passwordUpdateRequest) {
+        log.info("updating password...");
         if (passwordUpdateRequest.getOldPassword().equals(passwordUpdateRequest.getNewPassword())) {
             return ResponseEntity.badRequest().body("New password cannot be the same as the old password");
         }
 
         routerService.updatePassword(passwordUpdateRequest);
-
-
 
         return ResponseEntity.ok("Password updated successfully");
     }

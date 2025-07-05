@@ -7,6 +7,7 @@ import com.abhi.airtel.model.RouterResponseDto;
 import com.abhi.airtel.entity.Router;
 import com.abhi.airtel.exceptions.RouterNotFoundException;
 import com.abhi.airtel.mapper.RouterMapper;
+import com.abhi.airtel.repository.BandRepository;
 import com.abhi.airtel.repository.RouterRepository;
 import com.abhi.airtel.service.RouterService;
 import lombok.extern.slf4j.Slf4j;
@@ -18,6 +19,8 @@ import java.util.List;
 @Service
 @Slf4j
 public class RouterServiceImpl implements RouterService {
+    @Autowired
+    private BandRepository bandRepository;
 
     @Autowired
     private RouterRepository routerRepository;
@@ -37,8 +40,6 @@ public class RouterServiceImpl implements RouterService {
     public RouterResponseDto getRouterById(Long id) {
         Router router = routerRepository.findById(id)
                 .orElseThrow(() -> new RouterNotFoundException("Router not found with Id : " + id));
-
-
         log.info("Router : {}", router);
         return RouterMapper.RouterToRouterResponseDto(router);
     }
@@ -73,7 +74,7 @@ public class RouterServiceImpl implements RouterService {
                 .orElseThrow(() -> new RouterNotFoundException("Band not found with Id : " + passwordUpdateRequest.getBandId()));
 
         band.setBandPassword(passwordUpdateRequest.getNewPassword());
-        bandService.updateBandPassword(band);
+        bandService.saveBand(band);
     }
 }
 
