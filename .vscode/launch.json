@@ -1,0 +1,14 @@
+{
+    "configurations": [
+        {
+            "type": "java",
+            "name": "Spring Boot-AirtelCloneApplication<Device-Management>",
+            "request": "launch",
+            "cwd": "${workspaceFolder}",
+            "mainClass": "com.abhi.airtel.AirtelCloneApplication",
+            "projectName": "Device-Management",
+            "args": "",
+            "envFile": "${workspaceFolder}/.env"
+        }
+    ]
+}

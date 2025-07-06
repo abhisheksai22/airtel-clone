@@ -1,12 +1,11 @@
 spring:
   application:
-  name: AIRTEL-CLONE
+    name: DEVICE-MANAGEMENT
 
   datasource:
     url: jdbc:mysql://localhost:3306/airtel_clone
     username: root
     password: 773726
-    driver-class-name: com.mysql.cj.jdbc.Driver
   jpa:
     hibernate:
       ddl-auto: update

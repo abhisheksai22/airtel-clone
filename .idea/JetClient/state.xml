@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="JetClientState">
+    <option name="folders">
+      <list>
+        <folderState>
+          <option name="apis">
+            <list>
+              <integrationProperties>
+                <option name="name" value="API" />
+              </integrationProperties>
+              <integrationProperties>
+                <option name="name" value="API" />
+              </integrationProperties>
+            </list>
+          </option>
+          <option name="environmentGroups">
+            <list>
+              <environmentGroupState>
+                <option name="name" value="Default" />
+              </environmentGroupState>
+            </list>
+          </option>
+          <option name="id" value="cd49d64c-153d-4239-ba45-1b44b7ed21ac" />
+          <option name="name" value="Airtel security" />
+          <option name="selectedEnvironmentIds">
+            <map>
+              <entry key="default" />
+            </map>
+          </option>
+          <option name="syncProperties">
+            <synchronizationPropertiesState>
+              <option name="autoSync" value="true" />
+              <option name="folderPath" value="C:\Users\abhis\OneDrive\Desktop\Springboot advance projects\airtel_clone\airtel-clone\.jetclient" />
+            </synchronizationPropertiesState>
+          </option>
+        </folderState>
+      </list>
+    </option>
+    <option name="id" value="9700d2a8-99ef-4ef5-ab58-8ebcd6986a1e" />
+    <option name="version" value="6" />
+  </component>
+</project>
