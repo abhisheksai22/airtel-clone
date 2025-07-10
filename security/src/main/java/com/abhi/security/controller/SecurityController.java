@@ -24,7 +24,9 @@ public class SecurityController {
 
     @PostMapping("/register")
     public AirtelUser register(@RequestBody AirtelUser airtelUser) {
-        return userService.registerUser(airtelUser);
+        AirtelUser user = userService.registerUser(airtelUser);
+        log.info("user: {}", user);
+        return user;
     }
 
     @PostMapping("/login")

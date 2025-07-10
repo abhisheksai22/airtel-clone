@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/routers")
+@RequestMapping("/routers")
 @Slf4j
 public class RouterController {
 
@@ -23,17 +23,22 @@ public class RouterController {
     private RouterService routerService;
 
     @PostMapping
-    public ResponseEntity<RouterResponseDto> createRouter(@RequestBody @Valid RouterRequestDto routerRequestDto) {
+    public ResponseEntity<RouterResponseDto> createRouter(@RequestHeader("Authorization") String auth,
+                                                          @RequestHeader("x-request-id") String requestId,
+                                                          @RequestBody @Valid RouterRequestDto routerRequestDto) {
+        log.info("auth :{},requestId: {}", auth, requestId);
         return new ResponseEntity<>(routerService.saveRouter(routerRequestDto), HttpStatus.CREATED);
     }
 
     @GetMapping("/{id}")
     public ResponseEntity<RouterResponseDto> getRouterById(@PathVariable Long id) {
+        log.info("Fetching router with id: {}", id);
         return new ResponseEntity<>(routerService.getRouterById(id), HttpStatus.OK);
     }
 
     @GetMapping
-    public List<Router> getAllRouters() {
+    public List<Router> getAllRouters(@RequestHeader("Authorization") String auth) {
+        log.info("Auth :{}", auth);
         return routerService.getAllRouters();
     }
 

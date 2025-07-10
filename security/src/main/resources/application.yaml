@@ -17,5 +17,28 @@ spring:
 server:
   port: 6002
 
+eureka:
+  client:
+    register-with-eureka: true
+    fetch-registry: true
+    service-url:
+      defaultZone: http://localhost:8761/eureka/
+
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include:
+          - health
+          - info
+          - metrics
+          - beans
+
 jwt:
   secret: Q2F0c0luQm94ZXNBUkVDb29sU2VjdXJlU2VjcmV0S2V5MTIzIQ==
+
+logging:
+  level:
+    org.springframework.cloud.gateway: DEBUG
+    reactor.netty.http.server: DEBUG

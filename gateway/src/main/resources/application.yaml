@@ -1,0 +1,115 @@
+server:
+  port: 9100
+
+spring:
+  application:
+    name: API-GATEWAY
+
+  data:
+    redis:
+      host: localhost
+      port: 6379
+
+  cloud:
+    gateway:
+      default-filters:
+        - name: RequestRateLimiter
+          args:
+            key-resolver: "#{@ipKeyResolver}"
+            redis-rate-limiter.replenishRate: 10
+            redis-rate-limiter.burstCapacity: 20
+      routes:
+        - id: DEVICE-MANAGEMENT
+          uri: lb://DEVICE-MANAGEMENT
+          predicates:
+            - Path=/api/v1/airtel/**
+          filters:
+            - JwtAuthFilter
+#            - name: CircuitBreaker
+#              args:
+#                name: DeviceManagementCB
+#                fallbackUri: forward:/fallback/user
+        - id: AIRTEL-SECURITY
+          uri: lb://AIRTEL-SECURITY
+          predicates:
+            - Path=/security/**
+          filters:
+            - JwtAuthFilter
+#            - name: CircuitBreaker
+#              args:
+#                name: AirtelSecurityCB
+#                fallbackUri: forward:/fallback/user
+
+eureka:
+  client:
+    register-with-eureka: true
+    fetch-registry: true
+    service-url:
+      defaultZone: http://localhost:8761/eureka/
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include:
+          - health
+          - info
+          - metrics
+          - beans
+
+
+
+
+#resilience4j:
+#  circuitbreaker:
+#    instances:
+#      DeviceManagementCB:
+#        waitDurationInOpenState: 5s
+#        registerHealthIndicator: true
+#        slidingWindowSize: 10
+#        failureRateThreshold: 50
+#      AirtelSecurityCB:
+#        waitDurationInOpenState: 5s
+#        registerHealthIndicator: true
+#        slidingWindowSize: 10
+#        failureRateThreshold: 50
+#
+#  timelimiter:
+#    instances:
+#      DeviceManagementCB:
+#        timeoutDuration: 4s
+#      AirtelSecurityCB:
+#        timeoutDuration: 4s
+#
+#  bulkhead:
+#    instances:
+#      DeviceManagementCB:
+#        maxConcurrentCalls: 10
+#        maxWaitDuration: 0
+#
+#      AirtelSecurityCB:
+#        maxConcurrentCalls: 10
+#        maxWaitDuration: 0
+#
+#  thread-pool-bulkhead:
+#    instances:
+#      DeviceManagementCB:
+#        maxThreadPoolSize: 10
+#        coreThreadPoolSize: 5
+#        queueCapacity: 20
+#
+#      AirtelSecurityCB:
+#        maxThreadPoolSize: 10
+#        coreThreadPoolSize: 5
+#        queueCapacity: 20
+
+logging:
+  level:
+    root: INFO
+    org.springframework.cloud.gateway: DEBUG
+    org.springframework.security: DEBUG
+    com.infy: DEBUG
+    com.infy.airtel.gateway: DEBUG
+
+jwt:
+  secret: Q2F0c0luQm94ZXNBUkVDb29sU2VjdXJlU2VjcmV0S2V5MTIzIQ==

@@ -1,6 +1,7 @@
 package com.abhi.airtel.service.impl;
 
 import com.abhi.airtel.entity.Band;
+import com.abhi.airtel.mapper.RouterDtoMapper;
 import com.abhi.airtel.model.PasswordUpdateRequest;
 import com.abhi.airtel.model.RouterRequestDto;
 import com.abhi.airtel.model.RouterResponseDto;
@@ -28,10 +29,13 @@ public class RouterServiceImpl implements RouterService {
     @Autowired
     private BandServiceImpl bandService;
 
+    @Autowired
+    private RouterDtoMapper routerDtoMapper;
+
     @Override
     public RouterResponseDto saveRouter(RouterRequestDto routerRequestDto) {
 
-        Router router = RouterMapper.RouterRequestDtoToRouter(routerRequestDto);
+        Router router = routerDtoMapper.apply(routerRequestDto);
         Router savedRouter = routerRepository.save(router);
         return RouterMapper.RouterToRouterResponseDto(savedRouter);
     }

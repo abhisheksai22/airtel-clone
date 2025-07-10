@@ -17,6 +17,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
 
 import java.io.IOException;
+import java.util.List;
 
 @Component
 @Slf4j
@@ -27,6 +28,11 @@ public class JwtFilter extends OncePerRequestFilter {
 
     @Autowired
     ApplicationContext context;
+
+    private static final List<String> EXCLUDED_PATHS = List.of(
+            "/api/security/register",
+            "/api/security/login"
+    );
 
     @Override
     protected void doFilterInternal(HttpServletRequest request,
@@ -54,5 +60,11 @@ public class JwtFilter extends OncePerRequestFilter {
             }
         }
         filterChain.doFilter(request, response);
+    }
+
+    @Override
+    protected boolean shouldNotFilter(HttpServletRequest request) {
+        String path = request.getRequestURI();
+        return EXCLUDED_PATHS.stream().anyMatch(path::startsWith);
     }
 }

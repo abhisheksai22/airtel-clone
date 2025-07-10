@@ -17,24 +17,24 @@ import java.util.List;
 @Slf4j
 public class RouterMapper {
 
-    public static Router RouterRequestDtoToRouter(RouterRequestDto routerRequestDto) {
-        List<Band> bands = routerRequestDto.getBandRequestDtos() != null ? 
-                routerRequestDto.getBandRequestDtos().stream()
-                        .map(RouterMapper::bandRequestDtoToBand)
-                        .toList() : new ArrayList<>();
-        log.info("bands :{}", bands);
-        Router router = Router.builder()
-                .firmwareVersion(routerRequestDto.getFirmwareVersion())
-                .status(routerRequestDto.getStatus())
-                .model(routerRequestDto.getModel())
-                .ipAddress(routerRequestDto.getIpAddress())
-                .macAddress(routerRequestDto.getMacAddress())
-                .bands(bands)
-                .build();
-
-        router.getBands().forEach(band -> band.setRouter(router));
-        return router;
-    }
+//    public static Router RouterRequestDtoToRouter(RouterRequestDto routerRequestDto) {
+//        List<Band> bands = routerRequestDto.getBandRequestDtos() != null ?
+//                routerRequestDto.getBandRequestDtos().stream()
+//                        .map(RouterMapper::bandRequestDtoToBand)
+//                        .toList() : new ArrayList<>();
+//        log.info("bands :{}", bands);
+//        Router router = Router.builder()
+//                .firmwareVersion(routerRequestDto.getFirmwareVersion())
+//                .status(routerRequestDto.getStatus())
+//                .model(routerRequestDto.getModel())
+//                .ipAddress(routerRequestDto.getIpAddress())
+//                .macAddress(routerRequestDto.getMacAddress())
+//                .bands(bands)
+//                .build();
+//
+//        router.getBands().forEach(band -> band.setRouter(router));
+//        return router;
+//    }
 
     public static RouterResponseDto RouterToRouterResponseDto(Router router) {
         List<BandResponseDto> bandDtos = router.getBands().stream()

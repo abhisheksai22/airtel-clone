@@ -6,6 +6,8 @@
       <list>
         <option value="$PROJECT_DIR$/security/pom.xml" />
         <option value="$PROJECT_DIR$/airtel-clone/pom.xml" />
+        <option value="$PROJECT_DIR$/gateway/pom.xml" />
+        <option value="$PROJECT_DIR$/Eureka-Service/pom.xml" />
       </list>
     </option>
   </component>
